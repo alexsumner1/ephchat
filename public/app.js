@@ -126,7 +126,6 @@ app.controller("ChatController", function($http, $scope, $anchorScroll, $locatio
     }), $scope.newInterval * 1000);
 
     $scope.keepFocused = function() {
-	console.log("focusing");
 	angular.element('#newmessagebox').trigger('focus');
     }
 
