@@ -1,0 +1,5 @@
+gem 'rails'
+gem 'sinatra'
+gem 'sinatra-reloader'
+gem 'sinatra-basic-auth'
+gem 'json'
