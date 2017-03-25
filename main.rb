@@ -4,8 +4,8 @@ require 'sinatra/basic_auth'
 require 'json'
 
 
-set :port, 80
-set :bind, '0.0.0.0'
+set :port, 8081
+set :bind, '127.0.0.1'
 
 messages = []
 lastSent = 0
