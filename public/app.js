@@ -1,13 +1,13 @@
-var app = angular.module('myApp', []);
+var app = angular.module('myApp', ['ngSanitize']);
 
-app.filter("trust", ['$sce', function($sce) {
-  return function(htmlCode){
-    return $sce.trustAsHtml(htmlCode);
-  }
-}]);
+app.filter("newlines", function(){
+    return function(text) {
+	return text.replace(/\n/g, "&#13;");
+    }
+});
 
 
-app.controller("ChatController", function($http, $scope, $anchorScroll, $location) {
+app.controller("ChatController", function($sce, $http, $scope, $anchorScroll, $location) {
 
     $scope.passphrase = "";
     $scope.uname = "";
@@ -15,6 +15,8 @@ app.controller("ChatController", function($http, $scope, $anchorScroll, $locatio
     $scope.newInterval = 5;
     $scope.lastTimestamp = 0;
     $scope.expiry = 0;
+    $scope.cantSend = 0;
+    $scope.tout;
 
     $scope.decryptMessage = function(message) {
 	if(message == "Conversation Cleared") return message;
@@ -24,7 +26,7 @@ app.controller("ChatController", function($http, $scope, $anchorScroll, $locatio
 	} catch (e) {
 	    message = '';
 	}
-	if (message !== 'undefined' || message != '') return message; else return '';
+	if (message !== 'undefined' || message != '') return message.replace(/\n/g, "<br/>"); else return '';
     }
 
     $scope.scrollToBottom = function() {
@@ -34,12 +36,20 @@ app.controller("ChatController", function($http, $scope, $anchorScroll, $locatio
     }
     
     $scope.sendData = function() {
+	var newline = String.fromCharCode(13, 10);
+	clearTimeout($scope.tout);
+	$scope.cantSend = 1;
 	$http.post('/message', {message: CryptoJS.AES.encrypt($scope.newMessage, $scope.passphrase).toString() , username: $scope.uname}).success(function(data) {
 	    $scope.messages = data;
 	    $scope.scrollToBottom();
 	    $scope.newMessage = "";
+	    $scope.tout = setTimeout((function() {
+		$scope.cantSend = 0;
+		clearTimeout($scope.tout);
+	    }), 750);
 	}).error(function() {
 	    alert("Could not send message. Have you set your username and key?")
+	    $scope.cantSend = 0;
 	});
     };
 
