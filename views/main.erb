@@ -30,7 +30,7 @@
     <div class="chat" style="height:80%; position: relative; top: 58px; background: #eee; z-index: -100">
       <table style="min-width: 99%">
 	<tr ng-repeat="message in messages" ng-hide="message.item==''">
-	  <td style="min-height: 30px; width: 95%; margin: auto; display: block; border: 1px solid black; border-left: 6px solid #{{generatecolour(message.username)}}; font-family: sans-serif; padding: 7px; font-size: 0.9em; background: #fff"><b>{{message.username}}:</b> {{decryptMessage(message.item) | trust}} &nbsp;</td>
+	  <td style="min-height: 30px; width: 95%; margin: auto; display: block; border: 1px solid black; border-left: 6px solid #{{generatecolour(message.username)}}; font-family: sans-serif; padding: 7px; font-size: 0.9em; background: #fff"><b>{{message.username}}:</b> {{decryptMessage(message.item) | trust}} &nbsp;<br><font color="gray" size="1.8em">[{{message.timestamp * 1000 | date : 'mediumTime' : 'GMT'}}]</font></td>
 	</tr>
 
 	<tr style="height: 150px;">
