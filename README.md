@@ -15,15 +15,17 @@ This is a simple implementation of a cloud-based chat client for talking private
 - `rubygems`
 
 ## Setup
-To get it all working, you just need to do a `bundle install` in the project folder to install all required dependencies, then simply run `ruby main.rb` in the project folder, this will start a server bound to port 8081 on localhost, so you can test it. Then you could run an nginx web proxy if you want to host it.
+To get it all working, you just need to do a `bundle install` in the project folder to install all required dependencies, then simply run `ruby main.rb` in the project folder, this will start a server bound to port 8081 on localhost, so you can test it. Then you could run an nginx web proxy if you want to host it. Create a file called `password.txt` in the root directory to secure the main user account, called `user`
 
 ## Files
 The client is quite simple and consists of just three files. A backend API router, a HTML page, and a JS file.
 - `main.rb` : The main webserver application, sets up ports and contains all API endpoints
 - `views/main.erb` : The HTML managing the view, any content, and all angular bindings are here
 - `public/app.js`: The Javascript containing all code behind the frontend, dealing with API calls, etc.
+- `password.txt` : Password to log in to the site itself
 
 ## Desirable features
 - Image sharing
 - Potential calling features
 - Individual message deletion or 'starring' messages
+- Multiple users, multiple passwords
