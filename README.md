@@ -12,6 +12,9 @@ This is a simple implementation of a cloud-based chat client for talking private
 
 ## Pre-requisites
 - `ruby`
+- `ruby-devel`
+- `redhat-rpm-config` (if you get `nokogiri` compile issues)
+- `gcc`
 - `rubygems`
 
 ## Setup
