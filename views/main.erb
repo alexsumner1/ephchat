@@ -58,7 +58,7 @@
 	  <i class="fa fa-picture-o"></i>
 	</button>
       </div>
-      <textarea id="newmessagebox" ng-model="newMessage" ng-model-options="{ debounce: 500 }" style="height: 100px; width: 85%"></textarea><button ng-disabled="cantSend || newMessage.length == 0" style="-webkit-appearance: none; position: fixed; height:99px; width: 15%;" ng-click="keepFocused(); sendData()"><i style="color: #000;" ng-style="cantSend === 1 && {'color': '#777'} || !newMessage.length && {'color' : '#777'} || cantSend === 0 && {'color': '#000'}" class="fa fa-paper-plane"></i></button>
+      <textarea id="newmessagebox" ng-model="newMessage" ng-model-options="{ debounce: 250 }" style="height: 100px; width: 85%"></textarea><button ng-disabled="cantSend || newMessage.length == 0" style="-webkit-appearance: none; position: fixed; height:99px; width: 15%;" ng-click="keepFocused(); sendData()"><i style="color: #000;" ng-style="cantSend === 1 && {'color': '#777'} || !newMessage.length && {'color' : '#777'} || cantSend === 0 && {'color': '#000'}" class="fa fa-paper-plane"></i></button>
 
     </div>
 
