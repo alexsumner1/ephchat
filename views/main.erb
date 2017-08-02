@@ -12,6 +12,12 @@
       font-size: 1.2em;
       -webkit-appearance: none;
       }
+
+      .chat-box img {
+      max-width: 100%;
+      }
+
+
     </style>
     
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -19,6 +25,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.9-1/crypto-js.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular-sanitize.min.js"></script>
+    <script type="text/javascript" src="https://cdn.rawgit.com/adonespitogo/angular-base64-upload/master/src/angular-base64-upload.js"></script>
+
   </head>
   <body ng-app="myApp" ng-controller="ChatController" ng-init="promptForUsername(); promptForKey();" style="margin: 0px; !important;">
     <div style="height: 55px; background: #ddd; width: 100%; position: fixed; top: 0px; padding-top: 1px; box-shadow: 0px 2px 2px 2px rgba(100,100,100,0.5); ">
@@ -31,7 +39,7 @@
     <div class="chat" style="height:80%; position: relative; top: 58px; background: #eee; z-index: -100">
       <table style="min-width: 99%">
 	<tr ng-repeat="message in messages" ng-hide="message.item==''">
-	  <td style="min-height: 30px; width: 95%; margin: auto; display: block; border: 1px solid black; border-left: 6px solid #{{generatecolour(message.username)}}; font-family: sans-serif; padding: 7px; font-size: 0.9em; background: #fff"><b style="font-size: 0.8em">{{message.username}}</b><br/> <span ng-bind-html="decryptMessage(message.item)"></span> &nbsp;<br><font color="gray" size="1.8em">[{{message.timestamp * 1000 | date : 'mediumTime'}}]</font></td>
+	  <td class="chat-box" style="min-height: 30px; width: 95%; margin: auto; display: block; border: 1px solid black; border-left: 6px solid #{{generatecolour(message.username)}}; font-family: sans-serif; padding: 7px; font-size: 0.9em; background: #fff"><b style="font-size: 0.8em">{{message.username}}</b><br/> <span ng-bind-html="decryptMessage(message.item)"></span> &nbsp;<br><font color="gray" size="1.8em">[{{message.timestamp * 1000 | date : 'mediumTime'}}]</font></td>
 	</tr>
 
 	<tr style="height: 150px;">
@@ -40,8 +48,17 @@
       </table>
       
     </div>
-    <div style="position: fixed; bottom: 1px; height: 100px; width: 100%; background: #fff; border-top: 1px solid #999">
-      <textarea id="newmessagebox" ng-model="newMessage" style="height: 99%; width: 85%"></textarea><button ng-disabled="cantSend || newMessage.length == 0" style="-webkit-appearance: none; position: fixed; height:99px; width: 15%;" ng-click="keepFocused(); sendData()"><i style="color: #000;" ng-style="cantSend === 1 && {'color': '#777'} || !newMessage.length && {'color' : '#777'} || cantSend === 0 && {'color': '#000'}" class="fa fa-paper-plane"></i></button>
+    <div style="position: fixed; bottom: 1px; height: 152px; width: 100%; background: #fff; border-top: 1px solid #999">
+      <div style="width: 99%; height: 50px;">
+	<input type="file" ng-model="newFile" name="file" base-sixty-four-input accept="image/*" onload="onImageLoad" ng-show="imageSelect">
+	<button style="-webkit-appearance: none; color: #000; height: 50px; width: 19%" ng-hide="imageSelect">
+	  <i class="fa fa-smile-o"></i>
+	</button>
+	<button style="-webkit-appearance: none; color: #000; height: 50px; width: 19%" ng-hide="imageSelect" ng-click="imageSelect=1">
+	  <i class="fa fa-picture-o"></i>
+	</button>
+      </div>
+      <textarea id="newmessagebox" ng-model="newMessage" ng-model-options="{ debounce: 500 }" style="height: 100px; width: 85%"></textarea><button ng-disabled="cantSend || newMessage.length == 0" style="-webkit-appearance: none; position: fixed; height:99px; width: 15%;" ng-click="keepFocused(); sendData()"><i style="color: #000;" ng-style="cantSend === 1 && {'color': '#777'} || !newMessage.length && {'color' : '#777'} || cantSend === 0 && {'color': '#000'}" class="fa fa-paper-plane"></i></button>
 
     </div>
 

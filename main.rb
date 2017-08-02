@@ -1,17 +1,25 @@
 require 'sinatra'
 require 'sinatra/reloader'
 require 'sinatra/basic_auth'
+require 'sinatra/cross_origin'
 require 'json'
 
 
 set :port, 8081
-set :bind, '127.0.0.1'
+set :bind, '0.0.0.0'
 
 messages = []
 lastSent = 0
 wiped = 0
 expiry = 8
 
+configure do
+  enable :cross_origin
+end
+
+before do
+  response.headers['Access-Control-Allow-Origin'] = '*'
+end
 
 
 authorize do |username, password|

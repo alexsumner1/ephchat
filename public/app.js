@@ -1,4 +1,4 @@
-var app = angular.module('myApp', ['ngSanitize']);
+var app = angular.module('myApp', ['ngSanitize', 'naif.base64']);
 
 app.filter("newlines", function(){
     return function(text) {
@@ -7,7 +7,7 @@ app.filter("newlines", function(){
 });
 
 
-app.controller("ChatController", function($sce, $http, $scope, $anchorScroll, $location) {
+app.controller("ChatController", function($sce, $http, $scope, $window, $rootScope, $anchorScroll, $location) {
 
     $scope.passphrase = "";
     $scope.uname = "";
@@ -17,6 +17,9 @@ app.controller("ChatController", function($sce, $http, $scope, $anchorScroll, $l
     $scope.expiry = 0;
     $scope.cantSend = 0;
     $scope.tout;
+    $scope.newFile = {};
+    $scope.imageSelect = 0;
+    $scope.newMessage = '';
 
     $scope.decryptMessage = function(message) {
 	if(message == "Conversation Cleared") return message;
@@ -138,6 +141,19 @@ app.controller("ChatController", function($sce, $http, $scope, $anchorScroll, $l
     $scope.keepFocused = function() {
 	angular.element('#newmessagebox').trigger('focus');
     }
+
+    //functions for image upload
+    $scope.onImageLoad = function (e, reader, file, fileList, fileOjects, fileObj) {
+	var b64 = '';
+	b64 = b64.concat(fileObj.base64);
+	while (b64.length % 4 > 0) {
+	    b64 = b64.concat('=');
+	}
+	console.log(b64);
+	$scope.newMessage = $scope.newMessage.concat(file.name+'<br/><img src="data:'+file.type+';base64, '+b64+'"/>');
+	$scope.sendData();
+	$scope.imageSelect = 0;
+    };
 
 
     $scope.updateMessages();
